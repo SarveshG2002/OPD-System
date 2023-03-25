@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="/static/global.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            background-color: aliceblue;
+        }
+
+        * {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 35px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: blueviolet;
+            color: aliceblue;
+        }
+
+        .add {
+            background-color: aliceblue;
+            width: fit-content;
+            padding: 10px;
+            box-sizing: border-box;
+            color: black;
+            display: inline-block;
+            float: right;
+            font-size: 20px;
+        }
+
+        .add:hover {
+            cursor: pointer;
+        }
+
+        .add:active {
+            background-color: rgb(225, 194, 255);
+        }
+
+        .cert {
+            width: 70%;
+            padding: 25px 10px 25px 25px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            margin: 50px auto;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            display: grid;
+            grid-template-columns: 80% 20%;
+        }
+
+        .v {
+            margin-top: 10px;
+        }
+
+        .name {
+            margin-left: 0px;
+            font-size: 40px;
+
+        }
+
+        .status {
+            margin-left: 25px;
+        }
+
+        .diseas {
+            font-size: 25px;
+            /* margin-left: 25px; */
+        }
+
+        .desc {
+            color: grey;
+        }
+
+        .download {
+            width: fit-content;
+            padding: 10px;
+            box-sizing: border-box;
+            color: #ffffff;
+            background-color: blueviolet;
+            margin: 40% auto;
+        }
+        .parent_content{
+            display: grid;
+            grid-template-columns: 30% auto;
+        }
+        .certt{
+            width: 90%;
+            padding: 25px 10px 25px 25px;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            margin: 50px auto;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+            /* position: absolute; */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        e-Vaccination
+        <div class="add" onclick="$('#master').load('add_member_panel')">
+            + Add Family Member
+        </div>
+    </div>
+    <div class="parent_content">
+        <div class="side">
+            <div class="certt">
+                <div>
+                    <h1>Welcome,</h1>Sarveshgandgere2002@gmail.com
+                </div>
+                <br>
+                <br>
+                <div>
+                    You have total <div style="font-size: 25px; display: inline;" id="total"></div> family members linked on your mail id
+                </div>
+                <br>
+                <div>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, libero consectetur. Quia assumenda, necessitatibus consectetur reiciendis corporis impedit ad sed quos animi, magni dicta porro earum ipsa veritatis? Nesciunt, pariatur. <br>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia fugit esse quis iste, a aperiam deserunt dolor veritatis nulla sint placeat nisi perspiciatis nam! Nihil corporis itaque error numquam accusantium!
+                </div>
+            </div>
+        </div>
+        <div class="content" id="content">
+            <div class="cert">
+                <div>
+                    <div class="name v">
+                        Sarvesh Gandhere
+                    </div>
+                    <div class="status v">
+                        Status: Pending
+                    </div>
+                    <div class="diseas v">
+                        Diseas: Loos motion
+                    </div>
+                    <div class="desc v">
+    
+                    </div>
+                </div>
+                <div>
+                    <div class="download">
+                        Download Certificate
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        console.log(user_mail)
+        function get_data() {
+            let a = check_cred("get_Patinet_status", { mail: user_mail })
+            a.then(data => {
+                data = JSON.parse(data)["ret"]
+                console.log(data)
+                udata = data
+                markup = ""
+                for (let i = 0; i < data.length; i++) {
+                    markup = markup + "<div class='cert'><div><div class='name v'>" + data[i][0] + " " + data[i][1] + "</div><div class='status v'>Status: " + data[i][4] + "</div><div class='desc v'>Discription<br>" + data[i][2] + "</div></div><div><div class='download' onclick='download(" + i + ")'>Download Certificate</div></div></div>"
+                }
+                document.getElementById("content").innerHTML = markup
+                document.getElementById("total").innerHTML=data.length
+            })
+        }
+        function download(i) {
+            console.log(i)
+            let a = check_cred("download_certificate", { mail: user_mail, fname: udata[i][0], lname: udata[i][1] })
+            a.then(blob => {
+                // const url = window.URL.createObjectURL(blob);
+                // const a = document.createElement('a');
+                // a.href = url;
+                // a.download = 'example.pdf';
+                // document.body.appendChild(a);
+                // a.click();
+                // a.remove();
+                // window.URL.revokeObjectURL(url);
+                if (blob == "done") {
+                    site = `${window.origin}/vadapav/` + udata[i][0] + " " + udata[i][1];
+                    console.log(site)
+                    window.location.href = site;
+                    // document.getElementById("mail").value = ""
+                    // document.getElementById("fname").value = ""
+                    // document.getElementById("lname").value = ""
+                    let a = check_cred("upadate_treatment_patient", { mail: user_mail, lname: udata[i][1], fname: udata[i][0] })
+                    a.then(data => {
+                        console.log(data)
+                    })
+                    //location.replace(site)
+                }
+                else {
+                    alert("user not available, Please check name and mail")
+                }
+            })
+        }
+        get_data()
+
+    </script>
+</body>
+
+</html>

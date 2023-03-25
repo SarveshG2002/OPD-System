@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            background-color: aliceblue;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 35px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            background-color: blueviolet;
+            color: aliceblue;
+        }
+
+        .card {
+            width: 800px;
+            background-color: #ffffff;
+            padding: 10px;
+            margin: 15vh auto;
+            display: grid;
+            grid-template-columns: auto auto;
+            border-radius: 10px;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        }
+
+        .img {
+            width: 100%;
+            background-color: #71ccc9;
+        }
+
+        .form {
+            width: 95%;
+            margin: 0px auto;
+            padding: 0px 0px 20px 0px;
+        }
+
+        .otpform {
+            width: 95%;
+            margin: 0px auto;
+            display: none;
+        }
+
+        .title1 {
+            /* text-align: center; */
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 25px;
+            margin-top: 25px;
+        }
+
+        .title2 {
+            margin-top: 10px;
+            color: grey;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            /* text-align: center; */
+        }
+
+        input {
+            width: 100%;
+            border-radius: 10px;
+            font-size: 25px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        .but {
+            background-color: #71ccc9;
+        }
+
+        .but:hover {
+            cursor: pointer;
+        }
+
+        .but:active {
+            background-color: #ffffff;
+        }
+
+        .title3 {
+            color: grey;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            margin-top: 15px;
+        }
+
+        @media only screen and (max-width: 900px) {
+            .card {
+                width: 80%;
+                grid-template-columns: 100%;
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        e-Vaccination
+    </div>
+
+    <div class="card">
+        <div class="img">
+            <img src="/static/login-family.svg" alt="" width="100%">
+        </div>
+        <div class="form" id="form">
+            <div class="title1">
+                Register or signin for Vaccination
+            </div>
+            <div class="title2">
+                An OTP will be sent to your mobile number for verification
+            </div>
+            <input type="text" name="" id="mail" placeholder="Enter your mail id here">
+            <!-- <input type="text" name="" id="name" placeholder="Enter your name here"> -->
+            <input type="button" value="GET OTP" class="but" onclick="getOTP()" id="load">
+            <div class="title3">
+                If this is your firs time then this will create your accoount
+            </div>
+
+        </div>
+        <div class="otpform" id="oform">
+            <div class="title1">
+                OTP Verification
+            </div>
+            <div class="title2">
+                An OTP has been sent to your mail
+            </div>
+            <input type="text" name="" id="otp" placeholder="Enter otp here">
+            <input type="button" value="VERIFY OTP" class="but" onclick="checkOTP()" id="load">
+        </div>
+    </div>
+    <script>
+        let session_id;
+        //let otp;
+        function getOTP() {
+            let mail = document.getElementById("mail").value
+            document.getElementById("load").value = "sending.."
+            let a = check_cred("send_otp", { email: mail })
+            a.then(data => {
+                if (data == "False") {
+                    alert("Please enter valid email id")
+                }
+                else {
+                    data = JSON.parse(data)
+                    console.log(data)
+                    document.getElementById("form").style.display = "none"
+                    document.getElementById("oform").style.display = "block"
+                    session_id = data["session_id"]
+                    //otp=data["otp"]
+                    // window.location.href=""
+                }
+
+            })
+        }
+        function checkOTP() {
+            let mail = document.getElementById("mail").value
+            let otp = document.getElementById("otp").value
+            let a = check_cred("check_otp", { email: mail, session_id: session_id, otp: otp })
+            a.then(data => {
+                console.log(data)
+                user_mail = mail
+                if (data == "true") {
+                    $(document).ready(function () {
+                        $("#master").load("user_panel")
+                    })
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>

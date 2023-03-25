@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: aliceblue;
+            margin: 0px;
+        }
+        .header{
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 50px;
+            color: aliceblue;
+            background-color: blueviolet;
+            text-align: center;
+        }
+        .form{
+            width: 60%;
+            margin: 10px auto;
+            background-color: white;
+            padding: 10px;
+        }
+        .buttons{
+            width: fit-content;
+            margin: 0px auto;
+        }
+        .but{
+            display: inline-block;
+            width: fit-content;
+            padding: 10px;
+            font-size: 25px;
+            background-color: rgb(187, 139, 231);
+        }
+        .but:hover{
+            cursor: pointer;
+            background-color: rgb(249, 249, 249);
+            color: black;
+        }
+        .form input{
+            width: 100%;
+            border-width: 0px 0px 1px 0px;
+            font-size: 25px;
+            margin: 10px auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Add vaccine
+    </div>
+    <div class="form">
+        <input type="text" placeholder="Enter Vaccine name" id="vname">
+        <input type="text" placeholder="Vaccine description" id="vdesc">
+        <input type="text" placeholder="Vaccine count" id="vc">
+        <div class="buttons">
+            <div class="back but" onclick="$('#parent').load('admin_dashboard')">
+                Back
+            </div>
+            <div class="submit but" onclick="save_vaccine()">
+                Submit
+            </div>
+        </div>
+    </div>
+    <script>
+        function save_vaccine(){
+            let vname=document.getElementById("vname").value
+            let vdesc=document.getElementById("vdesc").value
+            let vc=document.getElementById("vc").value
+            let a=check_cred("addv",{name:vname,desc:vdesc,count:vc})
+            a.then(data=>{
+                console.log(data)
+                $("#parent").load("admin_dashboard")
+            })
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <link rel="stylesheet" href="/statics/login_signup.css">
+
+</head>
+
+<body>
+    <div class="big">
+        <div class="left">
+            <div class="center">
+                <p class="mySlides w3-animate-fading"
+                    style="font-size: 5vw;text-align:center;font-family: 'Chewy', cursive;color: antiquewhite;">
+                    e-Vaccination</p>
+                <p class="mySlides w3-animate-fading"
+                    style="font-size: 5vw;text-align:center;font-family: 'Chewy', cursive;color: antiquewhite;">
+                    Way to Vaccinate.</p>
+                <img class="mySlides w3-animate-fading" src="statics/drwv1.jpg"
+                    style="width:100%;height: 42vh;border-radius: 5%;">
+                <img class="mySlides w3-animate-fading" src="statics/drwv3.avif"
+                    style="width:100%;height: 42vh;border-radius: 5%;">
+            </div>
+        </div>
+        <div class="right">
+
+            <div class="box center">
+                <center>
+                    <input type="text" class="in" placeholder="Enter your login id"
+                        style="font-family: 'Chewy', cursive;" id="id"><br><br>
+                    <input type="password" class="in" placeholder="Enter your password"
+                        style="font-family: 'Chewy', cursive;" id="pass"><br><br>
+                    <input type="button" class="in but" value="Login" style="font-family: 'Chewy', cursive;"
+                        onclick=login()>
+                    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                    <a href="{{url_for('signup_html')}}">I am Admin</a><br>
+                    <a style="margin-left: 5%;" href="{{url_for('forgot_html')}}">Signup</a>
+                    <a style="margin-left: 5%;" href="{{url_for('forgot_html')}}">Forget password</a>
+                </center>
+            </div>
+            <img src="{{ url_for('static',filename='facebook.png') }}" alt=""
+                style="width: 50px;position: absolute;z-index: 1;margin-top: 220px;margin-left: -7.5%;">
+            <img src="{{ url_for('static',filename='insta.png') }}" alt=""
+                style="width: 50px;position: absolute;z-index: 1;margin-top: 220px;">
+            <img src="{{ url_for('static',filename='twitter.png') }}" alt=""
+                style="width: 50px;position: absolute;z-index: 1;margin-top: 220px;margin-left: 7.5%;">
+        </div>
+    </div>
+
+    <div class="medium">
+        <div class="boxm">
+            <center>
+                <input type="text" class="in" placeholder="Enter your login id"
+                    style="font-family: 'Chewy', cursive;margin-top: 0%;" id="sid"><br><br>
+                <input type="password" class="in" placeholder="Enter your password"
+                    style="font-family: 'Chewy', cursive;" id="spass"><br><br>
+                <input type="button" class="in but" value="Login" style="font-family: 'Chewy', cursive;"
+                    onclick=login()>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <a href="{{url_for('signup_html')}}">I am Admin</a><br>
+                <a style="margin-left: 5%;" href="{{url_for('forgot_html')}}">Signup</a>
+                <a style="margin-left: 5%;" href="{{url_for('forgot_html')}}">Forget password</a>
+            </center>
+        </div>
+
+
+        <img src="{{ url_for('static',filename='facebook.png') }}" alt=""
+            style="width: 50px;position: absolute;z-index: 1;margin-top: 300px;margin-left: -20%;">
+        <img src="{{ url_for('static',filename='insta.png') }}" alt=""
+            style="width: 50px;position: absolute;z-index: 1;margin-top: 300px;">
+        <img src="{{ url_for('static',filename='twitter.png') }}" alt=""
+            style="width: 50px;position: absolute;z-index: 1;margin-top: 300px;margin-left: 20%;">
+
+    </div>
+
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick=close_span()>&times;</span>
+            <center>
+                <p id="error" style="color: red;font-size: 40px;">Some text in the Modal..</p>
+            </center>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        var myIndex = 0;
+        var modal = document.getElementById("myModal");
+        var error = document.getElementById("error");
+
+
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) { myIndex = 1 }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 5000);
+        }
+
+
+
+
+        async function check_cred(site, entry) {
+            site = `${window.origin}/` + site + `/`;
+            const response = await fetch(site, { method: "POST", credentials: "include", body: JSON.stringify(entry), cache: "no-cache", headers: new Headers({ "content-type": "application/json" }) });
+            const user = await response.text();
+            return user;
+        }
+
+
+        function login() {
+
+
+            let id = document.getElementById("id");
+            let pass = document.getElementById("pass");
+
+            let sid = document.getElementById("sid");
+            let spass = document.getElementById("spass");
+            let error = document.getElementById("error");
+            let entry;
+            if (screen.width > 658) {
+                entry = { id: id.value, password: pass.value }
+            }
+            else {
+                entry = { id: sid.value, password: spass.value }
+            }
+
+            if ((entry.id == "" || entry.password == "")) {
+                error.innerText = "Please fill all the fields"
+                modal.style.display = "block";
+            }
+
+            else {
+                let a = check_cred("login_entry", entry);
+                a.then(data => {
+                    if (data === "false") {
+                        error.innerText = "User id or password is incorrect"
+                        modal.style.display = "block";
+                    }
+                    else if (data === "true") {
+                        site = `${window.origin}/operate/` + entry.id;
+                        window.location.href = site;
+                    }
+                });
+            }
+
+        }
+
+
+        function close_span() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

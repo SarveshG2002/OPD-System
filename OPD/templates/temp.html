@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0px;
+            background-color: #f6f5f8;
+        }
+
+        .header {
+            width: 100%;
+            padding: 20px;
+            background-color: white;
+            box-sizing: border-box;
+        }
+
+        .Search {
+            width: 60%;
+            margin: 0px auto;
+            display: grid;
+            grid-template-columns: 70% 30%;
+        }
+
+        .Search input {
+            font-size: 25px;
+            border-width: 0px 0px 1px 0px;
+        }
+
+        .Search button {
+            font-size: 25px;
+        }
+
+        .card {
+            width: 70%;
+            background-color: white;
+            padding: 20px 0px;
+            margin: 10px auto;
+            border-radius: 5px;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+
+        .card .pname {
+            width: 100%;
+            display: grid;
+            padding: 0px 10px;
+            grid-template-columns: 5% auto;
+        }
+
+        .pname div {
+            font-size: 25px;
+            margin-top: 10px;
+            margin-left: 20px;
+        }
+
+        .pdetails {
+            width: 90%;
+            margin: 0px auto;
+            padding: 20px 0px;
+            /* background-color: aqua; */
+            border-width: 0px 0px 1px 0px;
+            border-style: ridge;
+            border-color: black;
+            display: grid;
+            grid-template-columns: auto auto auto auto auto auto auto;
+        }
+
+        .ptreat {
+            width: 100%;
+            padding: 20px 0px;
+        }
+
+        .ptreat .treat {
+            width: fit-content;
+            padding: 10px;
+            background-color: rgb(194, 142, 244);
+            margin: 0px auto;
+        }
+
+        .ptreat .treat:hover {
+            background-color: black;
+            color: chartreuse;
+        }
+
+        .ptreat .progress {
+            width: 80%;
+            padding: 10px;
+            box-sizing: border-box;
+            margin: 0px auto;
+        }
+
+        progress {
+            width: 100%;
+        }
+
+        .progress_title {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: grid;
+            grid-template-columns: 25% 25% 25% 25%;
+        }
+        .add_patient{
+            width: fit-content;
+            padding: 10px;
+            margin: 10px auto;
+            background-color: rgb(194, 145, 240);
+        }
+        .add_patient:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="Search">
+            <input type="text" placeholder="search">
+            <div style="width: 50%;margin: 0px auto;">
+                <button>Search</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="add_patient" onclick="$('#parent').load('add_patient_form')">
+        Add Patient
+    </div>
+
+    <div class="main" id="main">
+        <div class="card">
+            <div class="pname">
+                <img src="/static/doctor.jpg" alt="" style="width: 50px;">
+                <div>
+                    Sarvesh gandhere
+                </div>
+            </div>
+            <div class="pdetails">
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;color: black;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+            </div>
+            <div class="ptreat">
+                <div class="treat">
+                    Start Treatment
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="card">
+            <div class="pname">
+                <img src="/static/doctor.jpg" alt="" style="width: 50px;">
+                <div>
+                    Sarvesh gandhere
+                </div>
+            </div>
+            <div class="pdetails">
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;color: black;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+                <div style="color: grey;font-size: 20px;">
+                    Age
+                    <div style="margin-top: 5px;font-size: 15px;">
+                        20 years
+                    </div>
+                </div>
+            </div>
+            <div class="ptreat">
+                <div class="progress">
+                    <div><progress id="file" value="25" max="100"></progress></div>
+                    <div class="progress_title">
+                        <div>Treatment is started</div>
+                        <div>Treatment is on Going</div>
+                        <div>Treatment completed</div>
+                        <div>User downloaded certificate</div>
+                    </div>
+                </div>
+                <div class="treat">
+                    Resume Treatment
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+    <script>
+
+        function get_patinet_data_from_db() {
+            let a = check_cred("get_patient_doctor", { "doctor": user })
+            a.then(data => {
+                console.log(data)
+                data = JSON.parse(data)["ret"]
+                patient_data = data
+                markup = ""
+                let temp
+                for (let i = 0; i < data.length; i++) {
+                    if (data[i][12] == "") {
+                        temp = "<div class='card'><div class='pname'><img src='/static/doctor.jpg' style='width: 50px;'><div>" + data[i][0] + " " + data[i][1] + "</div></div><div class='pdetails'><div style='color: grey;font-size: 20px;'>Age<div style='margin-top: 5px;font-size: 15px;color: black;'>" + data[i][2] + " years</div></div><div style='color: grey;font-size: 20px;'>Gender<div style='margin-top: 5px;font-size: 15px;'>" + data[i][3] + "</div></div><div style='color: grey;font-size: 20px;'>Blood<div style='margin-top: 5px;font-size: 15px;'>" + data[i][8] + "</div></div><div style='color: grey;font-size: 20px;''>Weight<div style='margin-top: 5px;font-size: 15px;'>" + data[i][6] + "</div></div><div style='color: grey;font-size: 20px;'>Height<div style='margin-top: 5px;font-size: 15px;'>" + data[i][7] + "</div></div><div style='color: grey;font-size: 20px;'>Diseas<div style='margin-top: 5px;font-size: 15px;'>" + data[i][10] + "</div></div></div><div class='ptreat'><div class='treat' onclick='start_treatment(" + i + ")'>Start Treatment</div></div></div>"
+                    }
+                    else {
+                        let status;
+                        if(data[i][12]=="pending"){
+                            status="50"
+                        }
+                        else if(data[i][12]=="done"){
+                            status="75"
+                        }
+                        else if(data[i][12]=="downloaded"){
+                            status="100"
+                        }
+                        temp = "<div class='card'><div class='pname'><img src='/static/doctor.jpg' style='width: 50px;'><div>" + data[i][0] + " " + data[i][1] + "</div></div><div class='pdetails'><div style='color: grey;font-size: 20px;'>Age<div style='margin-top: 5px;font-size: 15px;color: black;'>" + data[i][2] + " years</div></div><div style='color: grey;font-size: 20px;'>Gender<div style='margin-top: 5px;font-size: 15px;'>" + data[i][3] + "</div></div><div style='color: grey;font-size: 20px;'>Blood<div style='margin-top: 5px;font-size: 15px;'>" + data[i][8] + "</div></div><div style='color: grey;font-size: 20px;''>Weight<div style='margin-top: 5px;font-size: 15px;'>" + data[i][6] + "</div></div><div style='color: grey;font-size: 20px;'>Height<div style='margin-top: 5px;font-size: 15px;'>" + data[i][7] + "</div></div><div style='color: grey;font-size: 20px;'>Diseas<div style='margin-top: 5px;font-size: 15px;'>" + data[i][10] + "</div></div></div><div class='ptreat'><div class='progress'><div><progress id='file' value='"+status+"' max='100'></progress></div><div class='progress_title'><div>Treatment is started</div><div>Treatment is on Going</div><div>Treatment completed</div><div>User downloaded certificate</div></div></div><div class='treat' onclick='start_treatment(" + i + ")'>Start Treatment</div></div></div>"
+                    }
+                    markup = markup + temp
+                }
+                console.log(markup)
+                document.getElementById("main").innerHTML = markup
+            })
+        }
+
+        function start_treatment(i) {
+            patient_for_treat = patient_data[i]
+            $("#parent").load("treat_parent")
+        }
+        get_patinet_data_from_db()
+    </script>
+</body>
+
+</html>

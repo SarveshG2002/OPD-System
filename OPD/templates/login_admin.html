@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/login_signup.css">
+</head>
+
+<body>
+    <div class="big">
+        <div class="left">
+            <div class="center">
+                <p class="mySlides w3-animate-fading"
+                    style="font-size: 5vw;text-align:center;font-family: 'Chewy', cursive;color: antiquewhite;">
+                    e-Vaccination</p>
+                <p class="mySlides w3-animate-fading"
+                    style="font-size: 5vw;text-align:center;font-family: 'Chewy', cursive;color: antiquewhite;">
+                    Way to Vaccinate.</p>
+                <img class="mySlides w3-animate-fading" src="static/drwv1.jpg"
+                    style="width:100%;height: 42vh;border-radius: 5%;">
+                <img class="mySlides w3-animate-fading" src="static/drwv3.avif"
+                    style="width:100%;height: 42vh;border-radius: 5%;">
+            </div>
+        </div>
+        <div class="right">
+
+            <div class="box center">
+                <center>
+                    <input type="text" class="in" placeholder="Enter your name"
+                        style="font-family: 'Chewy', cursive;margin-top: 0%;" id="name"><br><br>
+                    <input type="mail" class="in" placeholder="Enter your mail id"
+                        style="font-family: 'Chewy', cursive;" id="mail"><br><br>
+                    <input type="otp" class="in" placeholder="Enter OTP here" style="font-family: 'Chewy', cursive;"
+                        id="otp" disabled><br><br>
+
+                    <input type="button" class="in but" value="Login" style="font-family: 'Chewy', cursive;"
+                        onclick=login()>
+                    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                    <select name="type" id="type">
+                        <option value="Doctor">I am Doctor</option>
+                        <option value="Admin">I am Admin</option>
+                    </select>
+                    <br>
+                    <a style="margin-left: 5%;" href="">Forget password</a>
+                </center>
+            </div>
+            <img src="" alt="" style="width: 50px;position: absolute;z-index: 1;margin-top: 220px;margin-left: -7.5%;">
+            <img src="" alt="" style="width: 50px;position: absolute;z-index: 1;margin-top: 220px;">
+            <img src="" alt="" style="width: 50px;position: absolute;z-index: 1;margin-top: 220px;margin-left: 7.5%;">
+        </div>
+    </div>
+
+    <div class="medium">
+        <div class="boxm">
+            <center>
+                <input type="text" class="in" placeholder="Enter your name"
+                    style="font-family: 'Chewy', cursive;margin-top: 0%;" id="sname"><br><br>
+                <input type="mail" class="in" placeholder="Enter your mail id"
+                    style="font-family: 'Chewy', cursive;" id="smail"><br><br>
+                <input type="otp" class="in" placeholder="Enter OTP here" style="font-family: 'Chewy', cursive;"
+                    id="sotp" disabled><br><br>
+
+                <input type="button" class="in but" value="Login" style="font-family: 'Chewy', cursive;"
+                    onclick=login()>
+                <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+                <a href="">I am Admin</a><br>
+                <a style="margin-left: 5%;" href="">Forget password</a>
+            </center>
+        </div>
+
+    </div>
+
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close" onclick=close_span()>&times;</span>
+            <center>
+                <p id="error" style="color: red;font-size: 40px;">Some text in the Modal..</p>
+            </center>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        var myIndex = 0;
+        var modal = document.getElementById("myModal");
+        var error = document.getElementById("error");
+        
+
+        carousel();
+
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("mySlides");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            myIndex++;
+            if (myIndex > x.length) { myIndex = 1 }
+            if (myIndex == "done") { clearInterval(this) }
+            x[myIndex - 1].style.display = "block";
+            setTimeout(carousel, 5000);
+        }
+
+        function login() {
+
+            if (otp_data == "") {
+                let name = document.getElementById("name");
+                let mail = document.getElementById("mail");
+                let otp = document.getElementById("otp");
+
+                let sname = document.getElementById("sname");
+                let smail = document.getElementById("smail");
+                let sotp = document.getElementById("sotp");
+                let error = document.getElementById("error");
+                let entry;
+                if (screen.width > 658) {
+                    entry = { name: name.value, email: mail.value, otp: otp.value }
+                }
+                else {
+                    entry = { name: sname.value, email: smail.value, otp: sotp.value }
+                }
+
+                if ((entry.id == "" || entry.password == "")) {
+                    error.innerText = "Please fill all the fields"
+                    modal.style.display = "block";
+                }
+
+                else {
+                    let a = check_cred("send_otp", entry);
+                    a.then(data => {
+                        if (data === "False") {
+                            error.innerText = "Email id is incorrect"
+                            modal.style.display = "block";
+                        }
+                        else {
+                            otp.disabled=false;
+                            sotp.disabled=false;
+                            otp_data={session_id:JSON.parse(data)["session_id"]}
+                            otp_data["email"] = entry["email"]
+                            otp_data["name"] = entry["name"]
+                        }
+                    });
+                    a.catch(data => {
+                        alert("srver not conected")
+                    })
+                }
+            }
+            else{
+                if (screen.width > 658) {
+                    otp_data["otp"]=document.getElementById("otp").value
+                }
+                else {
+                    otp_data["otp"]=document.getElementById("sotp").value
+                }
+                console.log(otp_data)
+                let a=check_cred("check_otp",otp_data)
+                a.then(data=>{
+                    console.log(data)
+                    if(data=="true"){
+                        let mail = document.getElementById("mail").value;
+                        user_type=document.getElementById("type").value;
+                        user=mail;
+                        user_name=document.getElementById("name").value;
+                        if(user_type=='Doctor'){
+                            console.log("doctor")
+                            $("#parent").load("doctor_dashboard")
+                        }
+                        else if(user_type=="Admin"){
+                            $("#parent").load("admin_dashboard")
+                        }
+                    }
+                    else{
+                        error.innerText = "Your not valid doctor"
+                        modal.style.display = "block";
+                    }
+                })
+            }
+
+        }
+
+
+        function close_span() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+
+
+    </script>
+
+</body>
+
+</html>

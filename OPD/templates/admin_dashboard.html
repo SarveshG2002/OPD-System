@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link rel="stylesheet" href="/static/admin_dashboard.css">
+</head>
+
+<body>
+    <div>
+        <div class="header">
+            <div class="header_text">
+                e-Vaccination
+            </div>
+        </div>
+        <div class="main_admin">
+            <div class="left">
+                <div class="boxes">
+                    <div class="box1 box" onclick="get_doctors()">
+                        <div style="display: grid;grid-template-columns: 50% 50%">
+                            <img src="/static/doctor.jpg" alt=""
+                                style="width: 50%;border-radius: 50%;margin: 20px 0px 10px 20px;">
+                            <div class="total" style="font-size: 50px;color: aliceblue; margin: 20px 0px;" id="total_d">
+                                500
+                            </div>
+                        </div>
+                        <div
+                            style="font-size: 40px;color: rgb(0, 128, 240);text-align: center;width: 100%;background-color: aliceblue;">
+                            Doctor
+                        </div>
+                    </div>
+                    <div class="box2 box" onclick="get_patient()">
+                        <div style="display: grid;grid-template-columns: 50% 50%">
+                            <img src="/static/doctor.jpg" alt=""
+                                style="width: 50%;border-radius: 50%;margin: 20px 0px 10px 20px;">
+                            <div class="total" style="font-size: 50px;color: aliceblue; margin: 20px 0px;" id="total_p">
+                                500
+                            </div>
+                        </div>
+                        <div
+                            style="font-size: 40px;color: rgb(0, 128, 240);text-align: center;width: 100%;background-color: aliceblue;">
+                            Patient
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="details_header">
+                        <div class="dhtext" style="text-align: center;" id="dhtext">
+                            Doctor
+                        </div>
+                        <div class="search">
+                            <input type="text" placeholder="Search" style="width: 90%;font-size: 25px;">
+                        </div>
+                    </div>
+                    <div class="user_details" id="user_details">
+                        <div class="udb">
+                            <div style="width: 100%;padding-top: 10px;">
+                                <center>
+                                    <img src="/static/user.webp" alt="">
+                                </center>
+                            </div>
+                            <div style="width: 100%;">
+                                <div class="text">
+                                    John doe
+                                </div>
+                            </div>
+                            <div style="width: 100%;">
+                                <div class="text">
+                                    Male
+                                </div>
+                            </div>
+                            <div style="width: 100%;">
+                                <div class="text">
+                                    53 years
+                                </div>
+                            </div>
+                            <div style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right">
+                <div id="curve_chart" class="graph">
+                    <canvas class="myChart" id="myChart" style="width:100%"></canvas>
+                </div>
+                <div class="buttons">
+                    <div class="but1 but" onclick="$('#parent').load('add_doctor_form')">
+                        Add doctor
+                    </div>
+                    <div class="but2 but" onclick="$('#parent').load('add_patient_form')">
+                        Add patient
+                    </div>
+                    <div class="but2 but" onclick="$('#parent').load('add_vaccine_form')">
+                        Add Vaccine
+                    </div>
+                    <div class="but2 but" onclick="show_vaccine()">
+                        Show vaccines
+                    </div>
+                    <div class="but2 but" onclick="$('#parent').load('requests')">
+                        Requests
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        function draw_chart(patients, dates) {
+            // var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
+            // var yValues = [7, 8, 8, 9, 9, 9, 10, 11, 14, 14, 15];
+            let max = Math.max(...patients);
+            new Chart("myChart", {
+                type: "line",
+                data: {
+                    labels: dates,
+                    datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(0,0,255,1.0)",
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: patients
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{ ticks: { min: 0, max: max } }],
+                    }
+                }
+            });
+        }
+
+
+        function get_graph_data() {
+            let a = check_cred("get_graph_data", {})
+            a.then(data => {
+                console.log(data)
+                data=JSON.parse(data)["ret"]
+                console.log(data)
+                let dates=[]
+                let date_count=[]
+                for(let i=0;i<data.length;i++){
+                    date = data[i][0]
+                    date = date.slice(4, 16)
+                    if (dates.includes(date)) {
+                        temp=dates.indexOf(date)
+                        date_count[temp]=date_count[temp]+1
+                    }
+                    else {
+                        dates.push(date)
+                        date_count.push(1)
+                        //rate.push(parseFloat(data[i][0]))
+                    }
+                }
+                console.log(dates)
+                console.log(date_count)
+                draw_chart(date_count,dates)
+            })
+        }
+        function add_vaccine(x) {
+            console.log(vdata[x][0])
+            update_vaccine_detail = vdata[x]
+            $('#user_details').load('update_vaccine')
+
+        }
+        function show_vaccine() {
+            let a = check_cred("get_vaccine", {})
+            a.then(data => {
+                data = JSON.parse(data)["ret"]
+                vdata = data
+                console.log(data)
+                // let markup=""
+                // for(let x=0;x<data.length;x++){
+                //     markup=markup+"<option value='"+data[x][0]+"'>"+data[x][0]+"</option>"
+                // }
+                // document.getElementById("vaccine").innerHTML=markup
+                let markup = ""
+                for (let x = 0; x < data.length; x++) {
+                    markup = markup + " <div class='udb'><div style='width: 100%;padding-top: 10px;'><center><img src='/static/user.webp'></center></div><div style='width: 100%;'><div class='text'>" + data[x][0] + "</div></div><div style='width: 100%;'><div class='text'>" + data[x][2] + " available</div></div><div style='width: 100%;background-color: green;color: white;' onclick=add_vaccine(" + x + ")><div class='text'>Add</div></div><div style='width: 100%;'></div></div>"
+                }
+                console.log("data done")
+                document.getElementById("dhtext").innerHTML = "Vaccine"
+                document.getElementById("user_details").innerHTML = markup
+                //document.getElementById("total_p").innerHTML=data.length
+            })
+
+        }
+        function get_doctors() {
+            //console.log("getting data")
+            let a = check_cred("get_doctors", { user: user })
+            a.then(data => {
+                data = JSON.parse(data)["ret"]
+                //console.log(data)
+                let markup = ""
+                for (let x = 0; x < data.length; x++) {
+                    markup = markup + " <div class='udb'><div style='width: 100%;padding-top: 10px;'><center><img src='" + data[x][7] + "'></center></div><div style='width: 100%;'><div class='text'>" + data[x][0] + "</div></div><div style='width: 100%;'><div class='text'>" + data[x][3] + "</div></div><div style='width: 100%;'><div class='text'>" + data[x][2] + " years</div></div><div style='width: 100%;'></div></div>"
+                }
+                //console.log("data done")
+                document.getElementById("dhtext").innerHTML = "Doctor"
+                document.getElementById("user_details").innerHTML = markup
+                document.getElementById("total_d").innerHTML = data.length
+                get_graph_data()
+            }).catch((err) => {
+
+            });
+        }
+        function get_patient() {
+            console.log("getting data")
+            let a = check_cred("get_patients", { user: user })
+            a.then(data => {
+                data = JSON.parse(data)["ret"]
+                //console.log(data)
+                let markup = ""
+                for (let x = 0; x < data.length; x++) {
+                    markup = markup + " <div class='udb'><div style='width: 100%;padding-top: 10px;'><center><img src='/static/user.webp'></center></div><div style='width: 100%;'><div class='text'>" + data[x][0] + "</div></div><div style='width: 100%;'><div class='text'>" + data[x][3] + "</div></div><div style='width: 100%;'><div class='text'>" + data[x][2] + " years</div></div><div style='width: 100%;'></div></div>"
+                }
+                console.log("data done")
+                document.getElementById("dhtext").innerHTML = "Patient"
+                document.getElementById("user_details").innerHTML = markup
+                document.getElementById("total_p").innerHTML = data.length
+            }).catch((err) => {
+
+            });
+        }
+        get_doctors()
+    </script>
+</body>
+
+</html>

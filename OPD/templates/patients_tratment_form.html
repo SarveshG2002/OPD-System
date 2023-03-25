@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+            background-color: #f6f5f8;
+        }
+        .nheader{
+            width: 100%;
+            padding: 20px 0px;
+            text-align: center;
+            background-color: white;
+            font-size: 40px;
+            box-sizing: border-box;
+        }
+        .card{
+            width: 60%;
+            padding: 0px 0px 10px 0px;
+            margin: 10px auto;
+            background-color: white;
+            box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+            border-radius: 5px;
+        }
+        .card:hover{
+            background-color: rgb(248, 248, 248);
+        }
+        .cardheader{
+            width: 100%;
+            border-width: 0px 0px 1px 0px;
+            border-color: rgb(196, 196, 196);
+            border-style: ridge;
+            font-size: 25px;
+            padding: 10px 20px;
+            box-sizing: border-box;
+        }
+        .desc{
+            padding: 10px 10px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 80% 20%;
+            box-sizing: border-box;
+        }
+        .desc textarea{
+            border-width: 0px 0px 1px 0px;
+        }
+        .desc .enable{
+            width: 50%;
+            height: fit-content;
+            background-color: blueviolet;
+            color: aliceblue;
+            padding: 5px;
+            margin: 0px auto;
+            text-align: center;
+        }
+        .desc .enable:hover{
+            background-color: black;
+            color: chartreuse;
+            cursor: pointer;
+        }
+        .desc .enable:active{
+            background-color: blueviolet;
+            color: aliceblue;
+        }
+        .med{
+            width: fit-content;
+            padding: 5px;
+            background-color: blueviolet;
+            color: #f6f5f8;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .submit{
+            width: fit-content;
+            padding: 10px;
+            background-color: blueviolet;
+            color: #f6f5f8;
+            font-size: 25px;
+            margin: 0px auto;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="nheader">
+            <div style="display: inline-block;background-color: rgb(211, 172, 247);font-size: 25px;padding: 10px;" onclick="$('#parent').load('doctor_dashboard')">
+                Back
+            </div>
+            Patient form
+        </div>
+        <div class="details">
+            <div class="card">
+                <div class="cardheader">
+                    Problem Description
+                </div>
+                <div class="desc">
+                    <textarea id="discription" disabled></textarea>
+                    <div class="enable" onclick="edit('discription')">
+                        Edit
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="cardheader">
+                    Specify diseas name
+                </div>
+                <div style="padding: 10px;">
+                    <input type="text" style="font-size: 25px;border-width: 0px 0px 1px 0px;width: 90%;margin-top: 10px;" id="diseas">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="cardheader">
+                    Add note
+                </div>
+                <div class="desc">
+                    <textarea id="note" disabled></textarea>
+                    <div class="enable" onclick="edit('note')">
+                        Edit
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="cardheader">
+                    Medicine (Add space to seperate medicine)
+                </div>
+                <div style="padding: 10px;">
+                    <div id="medList">
+                    </div>
+                    <input type="text" style="font-size: 25px;border-width: 0px 0px 1px 0px;width: 90%;margin-top: 10px;" id="med" oninput="add_med()">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="cardheader">
+                    Specify vaccine name (If applicable)
+                </div>
+                <div class="desc">
+                    <select name="vaccine" id="vaccine" style="font-size: 25px;">
+                        <option value="v1">Vaccine1</option>
+                        <option value="v2">Vaccine2</option>
+                        <option value="v3">Vaccine3</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="cardheader">
+                    Status
+                </div>
+                <div class="desc">
+                    <select name="vaccine" id="status" style="font-size: 25px;">
+                        <option value="">Not Started</option>
+                        <option value="pending">On going</option>
+                        <option value="done">Completed</option>
+                    </select>
+                    <div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card">
+                <div class="submit" onclick="submit()">
+                    Submit
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        function get_vaccines(){
+            let a=check_cred("get_vaccine",{})
+            a.then(data=>{
+                data=JSON.parse(data)["ret"]
+                let markup=""
+                for(let x=0;x<data.length;x++){
+                    markup=markup+"<option value='"+data[x][0]+"'>"+data[x][0]+"</option>"
+                }
+                document.getElementById("vaccine").innerHTML=markup
+            })
+        }
+        function add_med(){
+            let med=document.getElementById("med").value
+            let markup
+            if(med[med.length-1]==" "){
+                console.log("got space")
+                markup=document.getElementById("medList").innerHTML
+                markup="<div class='med'>"+med+"</div>"
+                document.getElementById("medList").innerHTML=markup
+            }
+        }
+        function edit(ids){
+            console.log(ids)
+            document.getElementById(ids).disabled=false
+
+        }
+        function submit(){
+            console.log("submit")
+            let desc=document.getElementById("discription").value
+            let note = document.getElementById("note").value
+            let meds = document.getElementById("med").value
+            let vaccine = document.getElementById("vaccine").value
+            let status = document.getElementById("status").value
+            let diseas = document.getElementById("diseas").value
+            if(status==""){
+                alert("please select status")
+            }
+            else{
+                let fname=patient_for_treat[0]
+                let lname=patient_for_treat[1]
+                let phone=patient_for_treat[4]
+                let pdata={fname:fname,lname:lname,phone:phone,desc:desc,note: note, med:meds, vaccine:vaccine, status:status, diseas:diseas,doctor:user_name,to:patient_for_treat[5]}
+                console.log(pdata)
+                let a=check_cred("submit_treatment",pdata)
+                a.then(data=>{
+                    console.log(data)
+                    if(JSON.parse(data)["ret"]=="done"){
+                        $("#parent").load("doctor_dashboard")
+                    }
+                })
+            }
+
+        }
+        function set_patient_treatment_form(){
+            let a=check_cred("set_patient_treatment_form",{lname:patient_for_treat[0],fname:patient_for_treat[1],phone:patient_for_treat[4]})
+            a.then(data=>{
+                
+                data=JSON.parse(data)["ret"][0]
+                console.log(data)
+                document.getElementById("discription").value=patient_for_treat[9]
+                document.getElementById("note").value=data[3]
+                document.getElementById("med").value=data[4]+" "
+                add_med()
+                document.getElementById("diseas").value=data[7]
+                get_vaccines()
+            })
+        }
+
+        console.log("from treatment_form: ",patient_for_treat)
+        //document.getElementById("discription").value=patient_for_treat[9]
+        set_patient_treatment_form()
+        
+    </script>
+</body>
+</html>

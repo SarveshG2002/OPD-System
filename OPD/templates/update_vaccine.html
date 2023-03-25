@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        .boxv{
+            width: fit-content;
+            height: fit-content;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .add_more{
+            margin-top: 10px;
+            font-size: 25px;
+        }
+        input{
+            width: 90%;
+            border-width: 0px 0px 1px 0px;
+            font-size: 30px;
+        }
+        .update{
+            width: fit-content;
+            padding: 10px;
+            background-color: blueviolet;
+            color: aliceblue;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+        .update:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="boxv">
+        <div class="available">
+            <h style="font-size: 25px;" id="avail">499</h><br>
+            Slots are available
+        </div>
+        <div class="add_more">
+            Add more<br>
+            <input type="number" placeholder="Enter here" id="c" oninput="calc()">
+        </div>
+        <div class="total" id="total">
+        </div>
+        <div class="update" onclick="update()">
+            Update
+        </div>
+    </div>
+    <script>
+        console.log(update_vaccine_detail)
+        document.getElementById("avail").value=update_vaccine_detail[2]
+        function calc(){
+            let c=document.getElementById("c").value
+            document.getElementById("total").innerHTML=parseInt(update_vaccine_detail[2])+parseInt(c)
+        }
+        function update(){
+            let c=document.getElementById("c").value
+            console.log(c)
+            let a=check_cred("upadate_vaccine_slot",{name:update_vaccine_detail[0],count:parseInt(update_vaccine_detail[2])+parseInt(c)})
+            a.then(data=>{
+                console.log(data)
+                if(data=="done"){
+                    $("#parent").load("admin_dashboard")
+                }
+                else{
+                    alert("error")
+                }
+            })
+        }
+    </script>
+</body>
+</html>

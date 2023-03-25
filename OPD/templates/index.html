@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        var otp_data = "";
+        var user_name
+        var user;
+        var user_type;
+        let patient_data
+        let patient_for_treat
+        let vdata
+        let member_request
+        let update_vaccine_detail
+        $(document).ready(function () {
+            $("#parent").load("login_admin")
+        })
+        async function check_cred(site, entry) {
+            site = `${window.origin}/` + site + `/`;
+            const response = await fetch(site, { method: "POST", credentials: "include", body: JSON.stringify(entry), cache: "no-cache", headers: new Headers({ "content-type": "application/json" }) });
+            const user = await response.text();
+            return user;
+        }
+    </script>
+</head>
+<body>
+    <div class="parent" id="parent"></div>
+</body>
+</html>

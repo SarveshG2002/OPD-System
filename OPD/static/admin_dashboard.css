@@ -1,0 +1,119 @@
+body{
+    background-color: #f6f5f8;
+    margin: 0px;
+}
+.header{
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+}
+.header_text{
+    font-size: 35px;
+    text-align: center;
+}
+.main_admin{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.left{
+    width: 100%;
+    padding-top: 10px;
+}
+.right{
+    width: 100%;
+    padding-top: 10px;
+}
+.boxes{
+    width: 100%;
+    margin: 0px auto;
+    padding-top: 10px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.box{
+    width: 70%;
+    height: fit-content;
+    background-image: linear-gradient(to bottom right, #673de6, #9f86e9);
+    margin: 50px auto;
+    border-radius: 20px;
+    overflow: auto;
+    box-shadow: 0 0 10px;
+}
+.box:hover{
+    width: 80%;
+    cursor: pointer;
+}
+.box:active{
+    width: 70%;
+}
+.details{
+    width: 100%;
+}
+.details_header{
+    width: 100%;
+    padding: 10px 0px;
+    font-size: 35px;
+    display: grid;
+    grid-template-columns: 30% auto;
+    background-color: rgb(212, 204, 204);
+}
+.user_details{
+    width: 100%;
+    box-sizing: border-box;
+    height: 350px;
+    overflow: auto;
+}
+.udb{
+    width: 85%;
+    background-color: rgb(255, 255, 255);
+    margin: 10px auto 0px auto;
+    box-sizing: border-box;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 10% auto auto auto auto;
+    font-size: 25px;
+    color: #777;
+    box-shadow: 0 10px 6px -6px #777;
+}
+.udb:hover{
+    cursor: pointer;
+    background-color: rgb(202, 202, 202);
+}
+.udb img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.text{
+    text-align: center;
+    margin: 15px 0px;
+}
+.graph{
+    width: 90%;margin: 40px auto; height: fit-content;border-radius: 20px;
+    box-sizing: border-box;
+    box-shadow: 5px 5px 10px;
+}
+.buttons{
+    display: grid;
+    grid-template-columns: 50% auto;
+    margin-top: 50px;
+}
+.but{
+    width: 70%;
+    padding: 10px;
+    margin: 10px auto;
+    background-color: #bb9ef5;
+    text-align: center;
+    font-size: 25px;
+}
+.but:hover{
+    background-color: black;
+    color: greenyellow;
+}
+.but:active{
+    background-color: #f6f5f8;
+    color: black;
+}
